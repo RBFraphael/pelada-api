@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Enums\InviteStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Invites\StoreInviteRequest;
 use App\Http\Requests\Invites\UpdateInviteRequest;
+use App\Mail\InviteCreatedMail;
 use App\Models\Game;
 use App\Models\Invite;
 use App\Repositories\InvitesRepository;
+use Illuminate\Support\Facades\Mail;
 
 class InvitesController extends Controller
 {
@@ -37,6 +40,10 @@ class InvitesController extends Controller
         }
 
         $invite = $this->invitesRepository->create(array_merge($input, ['game_id' => $game->id]));
+        if($invite){
+            Mail::to($invite->player->user->email)->send(new InviteCreatedMail($invite));
+        }
+
         return response()->json($invite, 201);
     }
 
@@ -57,5 +64,17 @@ class InvitesController extends Controller
     {
         $this->invitesRepository->delete($invite->id);
         return response()->json(null, 204);
+    }
+
+    public function confirm(Invite $invite)
+    {
+        $invite = $this->invitesRepository->update($invite->id, ['status' => InviteStatus::CONFIRMED]);
+        return response()->json($invite);
+    }
+
+    public function reject(Invite $invite)
+    {
+        $invite = $this->invitesRepository->update($invite->id, ['status' => InviteStatus::REJECTED]);
+        return response()->json($invite);
     }
 }

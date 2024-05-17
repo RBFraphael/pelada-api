@@ -1,0 +1,30 @@
+<mjml>
+  <mj-body>
+    <mj-section>
+      <mj-column>
+
+        <mj-image width="236px" src="https://api.pelada.rbfstudio.net/logo.jpg"></mj-image>
+
+        <mj-divider border-color="#8e44ad"></mj-divider>
+
+        <mj-text font-size="20px" font-weight="bold" color="#8e44ad" font-family="helvetica">Olá, {{ $name }}</mj-text>
+        <mj-text>Você recebeu um convite para participar de uma pelada no dia {{ $date }}.</mj-text>
+        <mj-text>Para participar da pelada, você precisa confirmar presença. Acesse a plataforma ou utilize os botões abaixo para confirmar presença ou recusar o convite.</mj-text>
+        
+        <mj-section>
+        	<mj-column>
+          	<mj-button background-color="#27ae60" href="https://pelada.rbfstudio.net/i/{{ $invite_id }}/confirm">Confirmar Presença</mj-button>
+          </mj-column>
+          <mj-column>
+          	<mj-button background-color="#c0392b" href="https://pelada.rbfstudio.net/i/{{ $invite_id }}/reject">Recusar Convite</mj-button>
+          </mj-column>
+        </mj-section>
+        
+        <mj-divider border-color="#2980b9"></mj-divider>
+        
+        <mj-text align="center" font-size="10px">&copy; 2024 Pelada.com</mj-text>
+
+      </mj-column>
+    </mj-section>
+  </mj-body>
+</mjml>

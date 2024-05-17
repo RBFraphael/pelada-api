@@ -23,3 +23,8 @@ Route::middleware('auth:api')->group(function () {
     Route::apiResource('players', PlayersController::class);
     Route::apiResource('users', UsersController::class);
 });
+
+Route::prefix('invites/{invite}')->group(function(){
+    Route::post('confirm', [InvitesController::class, 'confirm']);
+    Route::post('reject', [InvitesController::class, 'reject']);
+});
