@@ -22,7 +22,9 @@ class StorePlayerRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_id' => "required|exists:users,id",
+            'user' => 'required|array',
+            'user.email' => 'required|string|email|unique:users,email',
+            'user.password' => 'required|string|min:8|confirmed',
             'name' => "required|string",
             'level' => "required|integer|min:1|max:5",
             'is_goalkeeper' => "required|boolean",
@@ -37,8 +39,13 @@ class StorePlayerRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'user_id.required' => __('O campo de usuário é obrigatório'),
-            'user_id.exists' => __('O campo de usuário precisa ser um usuário existente'),
+            'user.required' => __("Usuário é obrigatório"),
+            'email.required' => __("Email é obrigatório"),
+            'email.email' => __("Email deve ser um email válido"),
+            'email.unique' => __("Email já está em uso"),
+            'password.required' => __("Senha é obrigatória"),
+            'password.min' => __("Senha deve ter no mínimo 8 caracteres"),
+            'password.confirmed' => __("As senhas não coincidem"),
             'name.required' => __('O campo de nome é obrigatório'),
             'name.string' => __('O campo de nome precisa ser uma string'),
             'level.required' => __('O campo de nível é obrigatório'),

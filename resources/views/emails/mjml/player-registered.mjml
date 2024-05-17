@@ -1,0 +1,29 @@
+<mjml>
+  <mj-body>
+    <mj-section>
+      <mj-column>
+
+        <mj-image width="236px" src="https://api.pelada.rbfstudio.net/logo.jpg"></mj-image>
+
+        <mj-divider border-color="#8e44ad"></mj-divider>
+
+        <mj-text font-size="20px" font-weight="bold" color="#8e44ad" font-family="helvetica">Olá, {{ $name }}</mj-text>
+        <mj-text>Seja bem-vindo ao Pelada.com! O lugar ideal para organizar suas peladas de fim de semana (e outros dias também, né?).</mj-text>
+        <mj-text>Você foi cadastrado na plataforma como um Jogador, mas também tem acesso à gestão dos jogos, visualização dos times e muito mais.</mj-text>
+        <mj-text>Para acessar a plataforma, utilize as credenciais abaixo:</mj-text>
+        
+        <mj-text>
+          <strong>E-mail:</strong>{{ $email }} <br/>
+          <strong>Senha:</strong> {{ $password }}
+        </mj-text>
+        
+        <mj-button background-color="#2980b9" href="https://pelada.rbfstudio.net">Acessar o Pelada.com</mj-button>
+        
+        <mj-divider border-color="#2980b9"></mj-divider>
+        
+        <mj-text align="center" font-size="10px">&copy; 2024 Pelada.com</mj-text>
+
+      </mj-column>
+    </mj-section>
+  </mj-body>
+</mjml>
