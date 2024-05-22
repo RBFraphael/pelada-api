@@ -13,7 +13,7 @@ class GamesSeeder extends Seeder
      */
     public function run(): void
     {
-        for($i = 0; $i < rand(2, 6); $i++){
+        for($i = 0; $i < rand(3, 9); $i++){
             Game::create([
                 'date' => fake()->dateTimeBetween("+1 day", "+1 month")->format('Y-m-d'),
                 'players_per_team' => rand(5, 11),
