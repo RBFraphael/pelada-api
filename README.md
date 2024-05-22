@@ -1,66 +1,40 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+![Pelada Logo](https://api.pelada.rbfstudio.net/logo.png)
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+# API do projeto Pelada.com
 
-## About Laravel
+## Sobre o projeto
+O Pelada.com consiste em um sistema de pequeno porte para organização de jogos de futebol entre amigos, normalmente em campos Society, popularmente conhecidos como "peladas".
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Inicializando o projeto
+1. Faça o clone do projeto `git clone https://github.com/rbfraphael/pelada-api.git`
+2. Renomeie o arquivo `.env.example` para `.env`
+3. Utilizando o Composer, instale as dependências do projeto `composer install`
+4. Caso deseje utilizar um banco de dados diferente do SQLite, é necessário atualizar as informações de conexão do banco no arquivo `.env`. Por padrão, o banco configurado é o SQLite, útil para fins de teste e validação.
+5. Inicialize o banco de dados executando as migrations `php artisan migrate:fresh`
+    - Pode utilizar, posteriormente, o comando `php artisan db:seed --class="AdminsSeeder"`, que fará o cadastro apenas do usuário administrador padrão
+    - Se desejar, pode adicionar a flag `--seed` ao comando principal (`php artisan migrate:fresh --seed`) para carregar o banco de dados com usuários, jogadores e jogos aleatoriamente gerados, além do usuário administrador padrão
+6. Gere a chave de segurança da aplicação `php artisan key:generate`
+7. Para a aplicação funcionar corretamente, é necessário gerar uma chave secreta para a autenticação via JWT `php artisan jwt:secret`
+8. Se você for executar a aplicação utilizando um servidor web (Apache, NGINX ou outros), altere a propriedade `APP_URL` no arquivo `.env`
+9. Para que sejam feitos corretamente os mapeamentos de URL para o front-end, é necessário definir o valor da propriedade `FRONTEND_URL` no arquivo `.env`
+10. Para o envio de e-mails, é necessário configurar corretamente os parâmetros de SMTP no arquivo `.env`, através das propriedades `MAIL_MAILER`, `MAIL_HOST`, `MAIL_PORT`, `MAIL_USERNAME`, `MAIL_PASSWORD` e `MAIL_ENCRYPTION`
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Executando o projeto
+Feita toda a configuração necessária para o projeto, basta acessar o endereço correspondente à aplicação de front-end ([Repositório do Front-end](https://github.com/rbfraphael/pelada-frontend)) devidamente configurada para consumir a API desta instância.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Utilizando o Postman
+Incluso neste repositório, há um arquivo JSON correspondente à uma collection para a aplicação [Postman](https://www.postman.com/), que pode ser utilizada para testes da API sem a aplicação front-end. Para isso, basta importar a collection na interface do Postman.
 
-## Learning Laravel
+**Nota 1:** Os endpoint necessitam de autenticação através do cabeçalho `Authorization: Bearer <token>`. Foi feita uma configuração nessa collection para auxiliar nos testes, onde, ao realizar a autenticação do usuário, as chamadas subsequentes aos endpoints terão o cabeçalho automaticamente inserido.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+**Nota 2:** Os tokens de autenticação possuem uma vida útil de 60 minutos (1 hora). Após esse período, o token será invalidado e não será possível consumir endpoints. Para continuar, você pode executar a chamada ao endpoint `/auth/refresh`, que gera um novo token de autenticação baseado no token anterior (método utilizado automaticamente pelo front-end através de interceptors) ou realizar uma nova autenticação através do endpoint `/auth/login`.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+**Nota 3:** Os endpoint `/invites/<invite_id>/confirm` e `/invites/<invite_id>/reject` não necessitam de autenticação, pois o intuito deles é a utilização através do e-mail enviado aos jogadores quando um novo convite para participação em um jogo é enviado.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Informações complementares
 
-## Laravel Sponsors
+### Design patterns
+Foi utilizado, além da própria estrutura do framework Laravel, o design pattern de Repository, onde todos os repositórios estão localizados em `/app/Repositories`. Além disso, alguns recursos auxiliares foram criados, como Enums (`/app/Enums`) e Interfaces (`/app/Interfaces`).
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
-
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### Algoritmo de geração e balanceamento dos times
+O algoritmo de geração e balanceamento dos times pode ser encontrado no arquivo `/app/Repositories/TeamsRepository`, no método `generateTeams()`. O algoritmo consiste em listar todos os jogadores confirmados, ordenados de forma decrescente pelo seu nível de habilidade; determinar a quantidade de times a serem criados, com base no número de jogadores por time definido no jogo e na quantidade de jogadores confirmados; distribuir os jogadores de forma balanceada em cada time, calculando o nível de cada time para realizar o balanceamento durante a distribuição dos jogadores; colocar os jogadores "restantes" (cuja contagem não compreende um time completo, conforme número de jogadores especificado no jogo) em um time parcial; e, por fim, persistir todos os times completos e o time parcial, quando houver, em banco de dados.
