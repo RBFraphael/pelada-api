@@ -36,6 +36,13 @@ class TeamsRepository extends Repository
         return $this;
     }
 
+    /**
+     * Função principal para gerar os times de um jogo
+     * 
+     * @param Game $game Jogo
+     * @return array Times gerados
+     * @throws HttpException Se não for possível dividir os jogadores em, pelo menos, dois times completos
+     */
     public function generateTeams(Game $game)
     {
         $maxPlayers = $game->players_per_team;
