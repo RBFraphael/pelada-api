@@ -1,0 +1,1000 @@
+{
+	"info": {
+		"_postman_id": "f7f32b13-d473-4e07-88d0-58828fe19f45",
+		"name": "Pelada API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29057081"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if(pm.response.code == 200){",
+									"    pm.collectionVariables.set(\"access_token\", pm.response.json().access_token);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"admin@pelada.com\",\n    \"password\": \"password\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Refresh Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if(pm.response.code == 200){",
+									"    pm.collectionVariables.set(\"access_token\", pm.response.json().access_token);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/auth/refresh",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"refresh"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "My Information",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if(pm.response.code == 200){",
+									"    pm.collectionVariables.set(\"access_token\", pm.response.json().access_token);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/auth/me",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"me"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if(pm.response.code == 200){",
+									"    pm.collectionVariables.set(\"access_token\", \"\");",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/auth/logout",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Games",
+			"item": [
+				{
+					"name": "Invites",
+					"item": [
+						{
+							"name": "Create Invite",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"if(pm.response.code == 201){",
+											"    pm.collectionVariables.set(\"invite_id\", pm.response.json().id)",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"player_id\": \"{{player_id}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/games/{{game_id}}/invites",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"games",
+										"{{game_id}}",
+										"invites"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "List Invites",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/games/{{game_id}}/invites?with=game,player",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"games",
+										"{{game_id}}",
+										"invites"
+									],
+									"query": [
+										{
+											"key": "with",
+											"value": "game,player"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Show Invite",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/games/{{game_id}}/invites/{{invite_id}}?with=player,game",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"games",
+										"{{game_id}}",
+										"invites",
+										"{{invite_id}}"
+									],
+									"query": [
+										{
+											"key": "with",
+											"value": "player,game"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Invite",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"if(pm.response.code == 201){",
+											"    pm.collectionVariables.set(\"invite_id\", pm.response.json().id)",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"player_id\": \"{{player_id}}\",\n    \"is_confirmed\": true\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/games/{{game_id}}/invites/{{invite_id}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"games",
+										"{{game_id}}",
+										"invites",
+										"{{invite_id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Invite",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/games/{{game_id}}/invites/{{invite_id}}?with=player,game",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"games",
+										"{{game_id}}",
+										"invites",
+										"{{invite_id}}"
+									],
+									"query": [
+										{
+											"key": "with",
+											"value": "player,game"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Teams",
+					"item": [
+						{
+							"name": "Generate Teams",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/games/{{game_id}}/teams",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"games",
+										"{{game_id}}",
+										"teams"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "List Teams",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/games/{{game_id}}/teams?with=players",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"games",
+										"{{game_id}}",
+										"teams"
+									],
+									"query": [
+										{
+											"key": "with",
+											"value": "players"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Show Team",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/games/{{game_id}}/teams/{{team_id}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"games",
+										"{{game_id}}",
+										"teams",
+										"{{team_id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Team",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Lorem Ipsum\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/games/{{game_id}}/teams/{{team_id}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"games",
+										"{{game_id}}",
+										"teams",
+										"{{team_id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Team",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/games/{{game_id}}/teams/{{team_id}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"games",
+										"{{game_id}}",
+										"teams",
+										"{{team_id}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "New Game",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if(pm.response.code == 201){",
+									"    pm.collectionVariables.set(\"game_id\", pm.response.json().id);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"date\": \"2024-05-19\",\n    \"max_players_per_team\": 5\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/games",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"games"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List Games",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/games",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"games"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Show Game",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/games/{{game_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"games",
+								"{{game_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Game",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"date\": \"2024-05-26\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/games/{{game_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"games",
+								"{{game_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Game",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/games/{{game_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"games",
+								"{{game_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Players",
+			"item": [
+				{
+					"name": "Create Player",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if(pm.response.code == 201){",
+									"    pm.collectionVariables.set(\"player_id\", pm.response.json().id);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Raphael Batista\",\n    \"level\": 2,\n    \"is_goalkeeper\": false\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/players",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"players"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List Players",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/players",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"players"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Show Player",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/players/{{player_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"players",
+								"{{player_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Player",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if(pm.response.code == 201){",
+									"    pm.collectionVariables.set(\"player_id\", pm.response.json().id);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Guilherme Borges\",\n    \"level\": 2,\n    \"is_goalkeeper\": false\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/players/{{player_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"players",
+								"{{player_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Player",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/players/{{player_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"players",
+								"{{player_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Create User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if(pm.response.code == 201){",
+									"    pm.collectionVariables.set(\"user_id\", pm.response.json().id);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"rbfraphael\",\n    \"email\": \"rbfraphael@gmail.com\",\n    \"password\": \"password\",\n    \"password_confirmation\": \"password\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/users",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List Users",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/users?with=player",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users"
+							],
+							"query": [
+								{
+									"key": "with",
+									"value": "player"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Show User",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/users/{{user_id}}?with=player.teams.game,player.invites.game",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"{{user_id}}"
+							],
+							"query": [
+								{
+									"key": "with",
+									"value": "player.teams.game,player.invites.game"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if(pm.response.code == 201){",
+									"    pm.collectionVariables.set(\"user_id\", pm.response.json().id);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"rbfraphael\",\n    \"email\": \"rbfraphael@gmail.com\",\n    \"password\": \"abcd1234\",\n    \"password_confirmation\": \"abcd1234\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/users/{{user_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"{{user_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/users/{{user_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"{{user_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Invites",
+			"item": [
+				{
+					"name": "Confirm",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/invites/{{invite_id}}/confirm",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"invites",
+								"{{invite_id}}",
+								"confirm"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Reject",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/invites/{{invite_id}}/reject",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"invites",
+								"{{invite_id}}",
+								"reject"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{access_token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"pm.request.headers.add({",
+					"    'key': \"Accept\",",
+					"    'value': \"application/json\"",
+					"});",
+					"pm.request.headers.add({",
+					"    'key': \"Content-type\",",
+					"    'value': \"application/json\"",
+					"});"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "game_id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "player_id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "invite_id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "team_id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "access_token",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "user_id",
+			"value": "",
+			"type": "string"
+		}
+	]
+}
