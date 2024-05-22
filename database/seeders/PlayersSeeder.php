@@ -22,7 +22,7 @@ class PlayersSeeder extends Seeder
                 'user_id' => $user->id,
                 'name' => fake()->firstName() . " " . fake()->lastName(),
                 'level' => rand(1, 5),
-                'is_goalkeeper' => fake()->boolean()
+                'is_goalkeeper' => fake()->boolean(25)
             ]);
         }
     }
