@@ -14,6 +14,27 @@ class Team extends Model
         'name',
     ];
 
+    protected $appends = [
+        'average_level',
+        'total_level',
+        'players_count',
+    ];
+
+    public function getAverageLevelAttribute()
+    {
+        return $this->players->avg('level');
+    }
+
+    public function getTotalLevelAttribute()
+    {
+        return $this->players->sum('level');
+    }
+
+    public function getPlayersCountAttribute()
+    {
+        return $this->players->count();
+    }
+
     public function game()
     {
         return $this->belongsTo(Game::class);
